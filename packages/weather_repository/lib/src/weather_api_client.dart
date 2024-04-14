@@ -9,25 +9,26 @@ import 'package:http/http.dart' as http;
 import 'package:meta/meta.dart';
 
 class WeatherApiClient {
-  static const baseUrl = 'https://www.metaweather.com';
+  static const host = 'api.openweathermap.org';
+  static const lat = '4.60971';
+  static const lon = '-74.08175';
+  static const key = "80a274c5c9601fa7d4a7e380191f8a37";
   final http.Client httpClient;
 
   WeatherApiClient({required this.httpClient}) : assert(httpClient != null);
 
-  Future<int> getLocationId(String city) async {
-    final locationUrl = '$baseUrl/api/location/search/?query=$city';
-    final locationResponse = await this.httpClient.get(locationUrl as Uri);
-    if (locationResponse.statusCode != 200) {
-      throw Exception('error getting locationId for city');
-    }
 
-    final locationJson = jsonDecode(locationResponse.body) as List;
-    return (locationJson.first)['woeid'];
-  }
 
-  Future<Weather> fetchWeather(int locationId) async {
-    final weatherUrl = '$baseUrl/api/location/$locationId/';
-    final weatherResponse = await this.httpClient.get(weatherUrl as Uri);
+  fetchWeather(String location) async {
+
+    final weatherUrl =Uri(
+        scheme: 'https',
+        host: host,
+        path: '/data/2.5/weather',
+        queryParameters: {'lat': lat,'lon': lon, 'appid': key, 'units':'metric'});
+
+    //Uri.https('$baseUrl/data/2.5/weather?lat=$lat&lon=$lon&appid=$key';
+    final weatherResponse = await this.httpClient.get(weatherUrl );
     if (weatherResponse.statusCode != 200) {
       throw Exception('error getting weather for location');
     }

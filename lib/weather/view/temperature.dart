@@ -1,19 +1,20 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_weather_bloc/blocs/blocs.dart';
+import 'package:ollyolly_weather/weather/weather.dart';
+
 
 class Temperature extends StatelessWidget {
   final double temperature;
   final double low;
   final double high;
-  final TemperatureUnits units;
+
 
   Temperature({
-    Key key,
-    this.temperature,
-    this.low,
-    this.high,
-    this.units,
-  }) : super(key: key);
+
+    required this.temperature,
+    required this.low,
+    required this.high,
+
+  }) ;
 
   @override
   Widget build(BuildContext context) {
@@ -22,8 +23,8 @@ class Temperature extends StatelessWidget {
         Padding(
           padding: EdgeInsets.only(right: 20.0),
           child: Text(
-            '${_formattedTemperature(temperature)}°',
-            style: TextStyle(
+            '${temperature}°',
+            style: const TextStyle(
               fontSize: 32,
               fontWeight: FontWeight.w600,
               color: Colors.white,
@@ -33,16 +34,16 @@ class Temperature extends StatelessWidget {
         Column(
           children: <Widget>[
             Text(
-              'max: ${_formattedTemperature(high)}',
-              style: TextStyle(
+              'max: ${high}',
+              style: const TextStyle(
                 fontSize: 16,
                 fontWeight: FontWeight.w100,
                 color: Colors.white,
               ),
             ),
             Text(
-              'max: ${_formattedTemperature(low)}',
-              style: TextStyle(
+              'max: ${low}',
+              style: const TextStyle(
                 fontSize: 16,
                 fontWeight: FontWeight.w100,
                 color: Colors.white,
@@ -54,8 +55,7 @@ class Temperature extends StatelessWidget {
     );
   }
 
-  int _toFahrenheit(double celsius) => ((celsius * 9 / 5) + 32).round();
 
-  int _formattedTemperature(double t) =>
-      units == TemperatureUnits.fahrenheit ? _toFahrenheit(t) : t.round();
+
+
 }

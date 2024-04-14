@@ -1,6 +1,5 @@
-import 'package:equatable/equatable.dart';
-import 'package:meta/meta.dart';
-import 'package:flutter_weather_bloc/models/weather.dart';
+
+part of 'weather_bloc.dart';
 
 abstract class WeatherState extends Equatable {
   const WeatherState();
@@ -17,7 +16,7 @@ class WeatherLoadSuccess extends WeatherState {
   //Weather Model
   final Weather weather;
 
-  WeatherLoadSuccess({@required this.weather}) : assert(weather != null);
+  WeatherLoadSuccess({required this.weather}) : assert(weather != null);
   @override
   List<Object> get props => [weather];
 }

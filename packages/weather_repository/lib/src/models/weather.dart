@@ -17,92 +17,53 @@ enum WeatherCondition {
 }
 
 class Weather extends Equatable {
-  final WeatherCondition condition;
-  final String formattedCondition; //"weather_state_name": "Heavy Rain",
-  final double minTemp;
+  final String main;
+  final double temp_min;
   final double temp;
-  final double maxTemp;
-  final int locationId; //6252230735822848
-  final String created; //"2020-10-13T09:20:02.790665Z"
-  final DateTime lastUpdated; //live time
-  final String location;
+  final double temp_max;
+  final double humidity;
+  final String location; //6252230735822848
+  final double wind_speed;
+
+
 
   const Weather(
-      {required this.condition,
-      required this.formattedCondition,
-      required this.minTemp,
+      {required this.main,
+      required this.temp_min,
       required this.temp,
-      required this.maxTemp,
-      required this.locationId,
-      required this.created,
-      required this.lastUpdated,
-      required this.location});
+      required this.temp_max,
+      required this.humidity,
+      required this.location,
+      required this.wind_speed
+      });
 
   @override
   List<Object> get props => [
-        condition,
-        formattedCondition,
-        minTemp,
+        main,
+        temp_min,
         temp,
-        maxTemp,
-        locationId,
-        created,
-        lastUpdated,
+        temp_max,
+        humidity,
         location,
+        wind_speed
       ];
 
   static Weather fromJson(dynamic json) {
-    final consolidatedWeather = json['consolidated_weather'][0];
+    final condition = json['weather'][0];
+    final weatherData = json['main'];
+    final location = json['name'];
+    final wind = json['wind'];
     return Weather(
-      condition: _mapStringToWeatherCondition(
-          consolidatedWeather['weather_state_abbr']), //icon
-      formattedCondition: consolidatedWeather['weather_state_name'],
-      minTemp: consolidatedWeather['min_temp'] as double,
-      temp: consolidatedWeather['the_temp'] as double,
-      maxTemp: consolidatedWeather['max_temp'] as double,
-      locationId: json['woeid'] as int,
-      created: consolidatedWeather['created'],
-      lastUpdated: DateTime.now(),
-      location: json['title'],
+      main: condition['main'], //icon
+      temp_min: weatherData['temp_min']  as double,
+      temp: weatherData['temp'] as double,
+      temp_max:weatherData['temp_max'] as double,
+      humidity:weatherData['humidity'] as double,
+      location:location,
+      wind_speed:wind['speed'] as double,
+
     );
   }
 
-  static WeatherCondition _mapStringToWeatherCondition(String input) {
-    WeatherCondition state;
-    switch (input) {
-      case 'sn':
-        state = WeatherCondition.snow;
-        break;
-      case 'sl':
-        state = WeatherCondition.sleet;
-        break;
-      case 'h':
-        state = WeatherCondition.hail;
-        break;
-      case 't':
-        state = WeatherCondition.thunderstorm;
-        break;
-      case 'hr':
-        state = WeatherCondition.heavyRain;
-        break;
-      case 'lr':
-        state = WeatherCondition.lightRain;
-        break;
-      case 's':
-        state = WeatherCondition.showers;
-        break;
-      case 'hc':
-        state = WeatherCondition.heavyCloud;
-        break;
-      case 'lc':
-        state = WeatherCondition.lightCloud;
-        break;
-      case 'c':
-        state = WeatherCondition.clear;
-        break;
-      default:
-        state = WeatherCondition.unknown;
-    }
-    return state;
-  }
+
 }

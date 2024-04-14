@@ -32,8 +32,11 @@ dependencies:
     sdk: flutter
   authentication_repository:
     path: packages/authentication_repository
+  weather_repository:
+    path: packages/weather_repository
   bloc: ^8.1.4
   equatable: ^2.0.3
+  http: ^1.2.1
 
 
   # The following adds the Cupertino Icons font to your application.

@@ -5,25 +5,29 @@ class GradientContainer extends StatelessWidget {
   final Widget child;
   final MaterialColor color;
 
-  const GradientContainer({
-    Key key,
-    @required this.color,
-    @required this.child,
-  })  : assert(color != null, child != null),
-        super(key: key);
+
+  const GradientContainer({super.key,
+    required this.color,
+    required this.child,
+  });
+
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      decoration: BoxDecoration(
+      decoration: const BoxDecoration(
         gradient: LinearGradient(
-          begin: Alignment.topCenter,
-          end: Alignment.bottomCenter,
-          stops: [0.6, 0.8, 1.0],
-          colors: [
-            color[700],
-            color[500],
-            color[300],
+          begin: Alignment.topLeft,
+          end: Alignment(0.8, 1),
+          colors: <Color>[
+            Color(0xff1f005c),
+            Color(0xff5b0060),
+            Color(0xff870160),
+            Color(0xffac255e),
+            Color(0xffca485c),
+            Color(0xffe16b5c),
+            Color(0xfff39060),
+            Color(0xffffb56b),
           ],
         ),
       ),

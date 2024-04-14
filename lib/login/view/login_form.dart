@@ -121,9 +121,11 @@ class _LoginButton extends StatelessWidget {
                     : null,
                 style: ElevatedButton.styleFrom(
                   shape: const StadiumBorder(),
-                  padding: const EdgeInsets.symmetric(vertical: 16),
+                  padding: const EdgeInsets.symmetric(vertical: 12),
                   backgroundColor: Colors.purple,
+                  minimumSize: Size(200, 10)
                 ),
+
                 child: const Text('Login',
                   style: TextStyle(fontSize: 20),
                 ),

@@ -1,13 +1,16 @@
 import 'package:authentication_repository/authentication_repository.dart';
+import 'package:ollyolly_weather/login/view/view.dart';
+import 'package:weather_repository/weather_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:ollyolly_weather/authentication/authentication.dart';
-//import 'package:ollyolly_weather/home/home.dart';
+import 'package:ollyolly_weather/weather/view/weather_page.dart';
+import 'package:ollyolly_weather/weather/weather.dart';
+import 'package:ollyolly_weather/weather/view/view.dart';
 import 'package:ollyolly_weather/login/login.dart';
 import 'package:ollyolly_weather/login/view/login_page.dart';
-
+import 'package:http/http.dart' as http;
 import 'authentication/bloc/authentication_bloc.dart';
-//import 'package:ollyolly_weather/splash/splash.dart';
+
 
 
 class App extends StatefulWidget {
@@ -19,13 +22,16 @@ class App extends StatefulWidget {
 
 class _AppState extends State<App> {
   late final AuthenticationRepository _authenticationRepository;
+  late final WeatherRepository _weatherRepository ;
 
 
   @override
   void initState() {
     super.initState();
     _authenticationRepository = AuthenticationRepository();
-
+    _weatherRepository =  WeatherRepository(
+        weatherApiClient: WeatherApiClient(
+        httpClient: http.Client()));
   }
 
   @override
@@ -34,19 +40,36 @@ class _AppState extends State<App> {
     super.dispose();
   }
 
+
+
+
   @override
   Widget build(BuildContext context) {
-    return RepositoryProvider.value(
-      value: _authenticationRepository,
-      child: BlocProvider(
-        create: (_) => AuthenticationBloc(
-          authenticationRepository: _authenticationRepository
-        ),
+
+    return MultiRepositoryProvider(
+      providers: [
+        RepositoryProvider<AuthenticationRepository>(
+            create:(context) =>_authenticationRepository,)
+      ],
+      child:MultiBlocProvider(
+        providers: [
+          BlocProvider<AuthenticationBloc>(
+              create:(BuildContext context) => AuthenticationBloc(
+                  authenticationRepository: _authenticationRepository),
+          ),
+          BlocProvider<WeatherBloc>(create: (BuildContext context) => WeatherBloc(
+              weatherRepository: _weatherRepository))
+        ],
         child: const AppView(),
-      ),
-    );
+      )
+      );
+
   }
+
+
 }
+
+
 
 class AppView extends StatefulWidget {
   const AppView({super.key});
@@ -70,7 +93,7 @@ class _AppViewState extends State<AppView> {
             switch (state.status) {
               case AuthenticationStatus.authenticated:
                 _navigator.pushAndRemoveUntil<void>(
-                  LoginPage.route(),
+                  Weather_Page.route(),
                       (route) => false,
                 );
               case AuthenticationStatus.unauthenticated:

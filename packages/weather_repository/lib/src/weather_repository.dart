@@ -10,7 +10,7 @@ class WeatherRepository {
 
   // as a USER we required City name
   Future<Weather> getWeather(String city) async {
-    final int locationId = await weatherApiClient.getLocationId(city);
-    return weatherApiClient.fetchWeather(locationId);
+
+    return await weatherApiClient.fetchWeather(city);
   }
 }
