@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:meta/meta.dart';
 
 class GradientContainer extends StatelessWidget {
   final Widget child;
@@ -8,7 +7,7 @@ class GradientContainer extends StatelessWidget {
 
   const GradientContainer({super.key,
     required this.color,
-    required this.child,
+    required this.child, required List<Text> children,
   });
 
 

@@ -1,7 +1,7 @@
 import 'package:equatable/equatable.dart';
 
 enum WeatherCondition {
-  // https://www.metaweather.com/api/   (taking icons)
+
 
   snow,
   sleet,
@@ -24,6 +24,7 @@ class Weather extends Equatable {
   final double humidity;
   final String location; //6252230735822848
   final double wind_speed;
+  final String image;
 
 
 
@@ -34,7 +35,8 @@ class Weather extends Equatable {
       required this.temp_max,
       required this.humidity,
       required this.location,
-      required this.wind_speed
+      required this.wind_speed,
+      required this.image
       });
 
   @override
@@ -45,7 +47,9 @@ class Weather extends Equatable {
         temp_max,
         humidity,
         location,
-        wind_speed
+        wind_speed,
+        image
+
       ];
 
   static Weather fromJson(dynamic json) {
@@ -61,6 +65,7 @@ class Weather extends Equatable {
       humidity:weatherData['humidity'] as double,
       location:location,
       wind_speed:wind['speed'] as double,
+      image: condition['icon']
 
     );
   }

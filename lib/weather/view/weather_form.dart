@@ -5,15 +5,15 @@ import 'package:weather_repository/weather_repository.dart';
 import 'package:http/http.dart' as http;
 
 
-import 'dart:async';
 
 class Weather_Form extends StatefulWidget {
+  const Weather_Form({super.key});
+
 @override
 _WeatherState createState() => _WeatherState();
 }
 
 class _WeatherState extends State<Weather_Form> {
-  final _locationController = TextEditingController();
   final _weatherBloc = WeatherBloc(
         weatherRepository: WeatherRepository(
             weatherApiClient: WeatherApiClient(
@@ -27,48 +27,67 @@ class _WeatherState extends State<Weather_Form> {
 
   @override
   Widget build(BuildContext context) {
-    _weatherBloc.add(GetWeather(location: "Chicago"));
+    _weatherBloc.add(GetWeather());
 
     return Scaffold(
       appBar: AppBar(
-        title: Text("Weather App"),
+        title: const Text("Weather App"),
       ),
       body: Container(
-        padding: EdgeInsets.all(16),
+        padding: const EdgeInsets.all(16),
         child: Column(
           children: [
-            TextField(
-              controller: _locationController,
-              decoration: InputDecoration(
-                hintText: "Enter location",
-              ),
-            ),
-            SizedBox(height: 16),
+            
+            const SizedBox(height: 16),
             ElevatedButton(
               onPressed: () {
-                _weatherBloc.add(GetWeather(location: _locationController.text));
+                _weatherBloc.add(GetWeather());
               },
-              child: Text("Get Weather"),
+              child: const Text("Refresh"),
             ),
-            SizedBox(height: 16),
+            const SizedBox(height: 16),
             Expanded(
               child: BlocBuilder<WeatherBloc, WeatherState>(
                 bloc: _weatherBloc,
                 builder: (context, state) {
                   if (state is WeatherLoadInProgress) {
-                    return Center(child: CircularProgressIndicator());
+                    return const Center(child: CircularProgressIndicator());
                   }
                   if (state is WeatherLoadSuccess) {
-                    return Column(
-                      children: [
-                        Text("Temperature: ${state.weather.temp}"),
-                        Text("Humidity: ${state.weather.humidity}"),
-                        Text("Wind Speed: ${state.weather.wind_speed}"),
-                      ],
+                    return GradientContainer(
+                      color: Colors.blueGrey,                      
+                      children: const [],
+                      child: RefreshIndicator(
+                        onRefresh: (){
+                           _weatherBloc.add(
+                                GetWeather()
+
+                           );
+                           throw '';
+                        }, child: ListView(
+                        children: <Widget>[
+                          Padding(
+                            padding: const EdgeInsets.only(top: 100.0),
+                            child: Center(
+                              child: Location(location: state.weather.location),
+                            ),
+                          ),
+
+                          Padding(
+                            padding: const EdgeInsets.symmetric(vertical: 50.0),
+                            child: Center(
+                              child: CombinedWeatherTemperature(
+                                weather: state.weather,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                      ),
                     );
                   }
                   if (state is WeatherError) {
-                    return Center(child: Text("Failed to get weather"));
+                    return const Center(child: Text("Failed to get weather"));
                   }
                   return Container();
                 },

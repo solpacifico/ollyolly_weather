@@ -2,11 +2,9 @@
 // getLocationId(String city)
 // fetchWeather(int locationId)
 
-import 'dart:async';
 import 'dart:convert';
 import 'models/models.dart';
 import 'package:http/http.dart' as http;
-import 'package:meta/meta.dart';
 
 class WeatherApiClient {
   static const host = 'api.openweathermap.org';
@@ -15,11 +13,11 @@ class WeatherApiClient {
   static const key = "80a274c5c9601fa7d4a7e380191f8a37";
   final http.Client httpClient;
 
-  WeatherApiClient({required this.httpClient}) : assert(httpClient != null);
+  WeatherApiClient({required this.httpClient});
 
 
 
-  fetchWeather(String location) async {
+  fetchWeather() async {
 
     final weatherUrl =Uri(
         scheme: 'https',

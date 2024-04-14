@@ -1,8 +1,5 @@
 
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:ollyolly_weather/weather/bloc/weather_bloc.dart';
-import 'package:weather_repository/weather_repository.dart';
 import 'package:ollyolly_weather/weather/view/view.dart';
 
 
@@ -17,7 +14,7 @@ class Weather_Page extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
-    return MaterialApp(
+    return const MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Flutter Weather',
       //theme: themeState.theme,

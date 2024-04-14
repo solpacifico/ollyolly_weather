@@ -123,7 +123,7 @@ class _LoginButton extends StatelessWidget {
                   shape: const StadiumBorder(),
                   padding: const EdgeInsets.symmetric(vertical: 12),
                   backgroundColor: Colors.purple,
-                  minimumSize: Size(200, 10)
+                  minimumSize: const Size(200, 10)
                 ),
 
                 child: const Text('Login',

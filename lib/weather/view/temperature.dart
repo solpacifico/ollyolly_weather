@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:ollyolly_weather/weather/weather.dart';
 
 
 class Temperature extends StatelessWidget {
@@ -8,7 +7,7 @@ class Temperature extends StatelessWidget {
   final double high;
 
 
-  Temperature({
+  const Temperature({super.key, 
 
     required this.temperature,
     required this.low,
@@ -21,9 +20,9 @@ class Temperature extends StatelessWidget {
     return Row(
       children: <Widget>[
         Padding(
-          padding: EdgeInsets.only(right: 20.0),
+          padding: const EdgeInsets.only(right: 20.0),
           child: Text(
-            '${temperature}°',
+            '$temperature°',
             style: const TextStyle(
               fontSize: 32,
               fontWeight: FontWeight.w600,
@@ -34,7 +33,7 @@ class Temperature extends StatelessWidget {
         Column(
           children: <Widget>[
             Text(
-              'max: ${high}',
+              'Max: $high°',
               style: const TextStyle(
                 fontSize: 16,
                 fontWeight: FontWeight.w100,
@@ -42,7 +41,7 @@ class Temperature extends StatelessWidget {
               ),
             ),
             Text(
-              'max: ${low}',
+              'Min: $low°',
               style: const TextStyle(
                 fontSize: 16,
                 fontWeight: FontWeight.w100,

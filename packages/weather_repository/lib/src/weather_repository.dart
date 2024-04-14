@@ -1,16 +1,14 @@
 import 'models/models.dart';
 import 'weather_api_client.dart';
-import 'package:meta/meta.dart';
 
 class WeatherRepository {
   final WeatherApiClient weatherApiClient;
 
-  WeatherRepository({required this.weatherApiClient})
-      : assert(weatherApiClient != null);
+  WeatherRepository({required this.weatherApiClient});
 
   // as a USER we required City name
-  Future<Weather> getWeather(String city) async {
+  Future<Weather> getWeather() async {
 
-    return await weatherApiClient.fetchWeather(city);
+    return await weatherApiClient.fetchWeather();
   }
 }
